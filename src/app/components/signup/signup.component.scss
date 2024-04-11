@@ -1,0 +1,50 @@
+.btn-google {
+    color: #545454;
+background-color: #ffffff;
+box-shadow: 0 1px 2px 1px #ddd;
+border-radius: 30px;
+}
+.signup {
+    color: #ffffff;
+background-color: #9000ff;
+box-shadow: 0 1px 2px 1px #ddd;
+border-radius: 30px;
+
+}
+.login {
+    color: #ffffff;
+background-color: #0073ff;
+box-shadow: 0 1px 2px 1px #ddd;
+
+}
+.or-container {
+    align-items: center;
+    color: #ccc;
+    display: flex;
+    margin: 25px 0;
+}
+.line-separator {
+    background-color: #ccc;
+    flex-grow: 5;
+    height: 1px;
+}
+.or-label {
+    flex-grow: 1;
+    margin: 0 15px;
+    text-align: center;
+}
+.rotate {
+    transform: rotate(45deg);
+  }
+  .increase-height {
+    transform: scaleZ(1.5);
+  }
+  .cascading-right {
+    margin-right: -100px;
+}
+
+@media (max-width: 991.98px) {
+    .cascading-right {
+        margin-right: 0;
+    }
+}

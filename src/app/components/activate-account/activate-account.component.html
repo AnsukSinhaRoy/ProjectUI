@@ -1,0 +1,21 @@
+<div class="container">
+    <form *ngIf="myForm" [formGroup]="myForm" (ngSubmit)="handleSubmit()" class="form">
+      <label>Password:</label>
+      <input type="{{ encryptedView ? 'password' : 'text' }}" formControlName="password">
+  
+      <label>Confirm Password:</label>
+      <input type="password" formControlName="confirmPassword">
+  
+      <div *ngIf="passwordMismatch">
+        Passwords do not match. Please try again.
+      </div>
+  
+      <button type="submit" [disabled]="submitDisabled">Submit</button>
+    </form>
+  
+    <div class="toggle">
+      <input type="checkbox" id="encryptedView" [checked]="encryptedView" (change)="toggleEncryptedView()">
+      <label for="encryptedView">Toggle Encrypted View</label>
+    </div>
+  </div>
+  

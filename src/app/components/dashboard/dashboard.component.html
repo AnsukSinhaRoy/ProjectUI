@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <title>User Dropdown Example</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">TMS</a>
+  <div class="dropdown ml-auto dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+      {{this.firstName}}
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+      <li><a class="dropdown-item" (click)="openModal()">My profile</a></li>
+      <li><a class="dropdown-item" (click)="logout()">Log Out</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page__content shadow p-3 position-relative">
+  <div class="buttons">
+    <button (click)="showActiveTickets()"[ngClass]="{ 'active-tab': activeTab === 'active' }"><h2>Active Tickets</h2></button>
+    <button (click)="showClosedTickets()" [ngClass]="{ 'active-tab': activeTab === 'closed' }"><h2>Closed Tickets</h2></button>
+    <button (click)="showAllTickets()" [ngClass]="{ 'active-tab': activeTab === 'all' }"><h2>All Tickets</h2></button>
+  </div>
+  <div  *ngIf="activeTicketsFlag || closedTicketsFlag || allTicketsFlag">
+    <div  *ngIf="tickets.length > 0">
+      <div class="ticket" *ngFor="let ticket of tickets">
+        <div class="d-flex justify-content-between">
+          <div class="ticket-attribute-box">
+            <h3>Customer Name: {{ ticket.customerName }}</h3><br>
+          </div>
+          <div class="ticket-attribute-box">
+            <h3>Ticket ID: {{ ticket.ticketID }}</h3>
+          </div>
+          <div><button class="dropdown-item" (click)="details(this.ticket.ticketID)">Details</button></div>
+        </div>
+      </div>
+    </div>
+    <p *ngIf="tickets.length === 0">No tickets found for this category.</p>
+  </div>
+  
+</div>
+
+<!-- User Profile Modal content -->
+<div class="modal" [ngStyle]="{ 'display': profileModal ? 'block' : 'none' }">
+  <span class="close" (click)="closeModal()">Close</span>
+  <form class="modal-content" action="/action_page.php">
+    <div class="container">
+
+      <label for="email"><b>Email</b></label>
+      <br><br>
+      <div class="display-box">
+        <span id="email">{{ emailValue }}</span>
+      </div>
+  
+      <br>
+      <label for="firstName"><b>First Name</b></label>
+      <br><br>
+      <div class="display-box">
+        <span id="firstName">{{ firstName }}</span>
+        <i class="material-icons edit-icon" (click)="editFirstName($event)">edit</i>
+      </div>
+  
+      <br>
+      <label for="lastName"><b>Last Name</b></label>
+      <br><br>
+      <div class="display-box">
+        <span id="lastName">{{ lastName }}</span>
+        <i class="material-icons edit-icon" (click)="editLastName($event)">edit</i>
+      </div>
+  
+      <br>
+      <label for="phoneNumber"><b>Phone Number</b></label>
+      <br><br>
+      <div class="display-box">
+        <span id="phoneNumber">{{ phoneNumber }}</span>
+        <i class="material-icons edit-icon" (click)="editPhoneNumber($event)">edit</i>
+      </div>
+      <br>
+  
+      <label for="address"><b>Address</b></label>
+      <br><br>
+      <div class="display-box">
+        <span id="address">{{ address }}</span>
+        <i class="material-icons edit-icon" (click)="editaddress($event)">edit</i>
+      </div>
+      <br>
+  
+      <div class="clearfix">
+        <button type="button" (click)="update()" class="cancelbtn">Commit Changes</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Ticket Modal content -->
+<div class="modal" [ngStyle]="{ 'display': tidketModal ? 'block' : 'none' }">
+  <span class="close" (click)="closeModal()">Close</span>
+  <form class="modal-content" action="/action_page.php">
+    <div class="container">
+      <h2>Ticket Details</h2>
+      <div *ngIf="selectedTicket">
+        <p><strong>Ticket ID:</strong> {{ selectedTicket.ticketID }}</p>
+        <p><strong>Status:</strong> {{ selectedTicket.status }}</p>
+        <p><strong>Raise Date:</strong> {{ selectedTicket.raiseDate }}</p>
+        <p><strong>Customer Name:</strong> {{ selectedTicket.customerName }}</p>
+        <p><strong>SLA:</strong> {{ selectedTicket.sla }}</p>
+        <p><strong>Machine:</strong> {{ selectedTicket.machine }}</p>
+        <p><strong>Description:</strong> {{ selectedTicket.description }}</p>
+        <ng-container *ngIf="selectedTicket.status === 'Active'">
+          <p><strong>Close OPT:</strong>
+            <ng-container *ngIf="!editCloseOPT; else editCloseOPTBlock">
+              <button (click)="editCloseOPT = true">Edit</button>
+            </ng-container>
+            <ng-template #editCloseOPTBlock>
+              <input [(ngModel)]="closeOPTInput" [ngModelOptions]="{ standalone: true }">
+              <button (click)="submitCloseOPT()">Submit</button>
+              <button (click)="editCloseOPT = false">Cancel</button>
+            </ng-template>
+          </p>
+        </ng-container>
+      </div>
+      
+    </div>
+  </form>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

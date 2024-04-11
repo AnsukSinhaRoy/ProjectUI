@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Form</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body>
+  <div class="container">
+    <form *ngIf="myForm" [formGroup]="myForm" (ngSubmit)="handleSubmit()" class="form">
+      <h1>Password Form</h1>
+      <div class="input-group">
+        <label for="password">Password:</label>
+        <input type="{{ encryptedView ? 'password' : 'text' }}" id="password" formControlName="password"
+          placeholder="Enter your password">
+        <br>
+        <i class="toggle-icon fas" [ngClass]="encryptedView ? 'fa-eye-slash' : 'fa-eye'"
+          (click)="toggleEncryptedView()"></i>
+      </div>
+      <div class="input-group">
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" formControlName="confirmPassword"
+          placeholder="Confirm your password">
+      </div>
+      <div *ngIf="passwordMismatch" class="error-message">
+        Passwords do not match. Please try again.
+      </div>
+      <button type="submit" [disabled]="submitDisabled">Submit</button>
+    </form>
+  </div>
+</body>
+
+</html>
